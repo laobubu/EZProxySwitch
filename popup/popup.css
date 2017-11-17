@@ -1,0 +1,35 @@
+body, html {
+    width: 200px;
+    margin: 0;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.item {
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 2px;
+    border-bottom: 1px solid #CCC;
+    color: #666;
+    background-color: #FFF;
+}
+
+.item .ball {
+    display: inline-block;
+    vertical-align: middle;
+    width: .6em;
+    height: .6em;
+    background-color: currentColor;
+    border-radius: 100%;
+    margin-right: .4em;
+    border: 1px solid rgba(0,0,0,0.3);
+}
+
+.item:hover {
+    background-color: #EFF;
+}
+
+.item.active {
+    color: #000;
+    background-color: #CEF;
+}

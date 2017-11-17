@@ -1,0 +1,35 @@
+{
+    "manifest_version": 2,
+    "name": "EZ Proxy Switch",
+    "description": "Out-of-the-box Proxy Switch Extension for Modern Browsers",
+    "version": "1.0",
+    "icons": {
+        "48": "icons/basic.svg",
+        "96": "icons/basic.svg"
+    },
+    "applications": {
+        "gecko": {
+            "strict_min_version": "56.0a1"
+        }
+    },
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "options_ui": {
+        "page": "options/options.html",
+        "browser_style": false,
+        "open_in_tab": true
+    },
+    "browser_action": {
+        "default_title": "EZ Proxy Switch",
+        "default_popup": "popup/popup.html",
+        "default_icon": "icons/basic.svg"
+    },
+    "permissions": [
+        "proxy",
+        "storage",
+        "tabs"
+    ]
+}
