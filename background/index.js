@@ -1,4 +1,9 @@
-'use strict';
+import IconGen from './icongen'
+import genPACSysConfig from './opt2pac'
+
+if (process.env.NODE_ENV !== 'production') {
+    console.log("fuck" + process.env.NODE_ENV)
+}
 
 const proxyScriptURL = 'pac.js';
 const optionURL = 'options/options.html';
@@ -61,7 +66,7 @@ function updatePACConf() {
 
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (sender.url === browser.extension.getURL(proxyScriptURL)) {
-        if (message === 'init') updatePACConf();
+        if (message === 'pac:init') updatePACConf();
         else console.log(message);
 
         return;
@@ -78,6 +83,8 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
         } else if (message === 'opt:pull') {
             // load options
             sendResponse(options);
+        } else if (message === 'opt:dbg') {
+            sendResponse(genPACSysConfig(options));
         }
 
         return;
@@ -109,7 +116,7 @@ function loadOptions() {
                 s.enabled = true;
             }
 
-            if (!(s.profiles instanceof Array) || !s.profiles.length) {
+            if (!('profiles' in s) || !(s.profiles instanceof Array) || !s.profiles.length) {
                 s.profiles = [
                     {
                         name: "System",
@@ -151,11 +158,11 @@ function loadOptions() {
                 ];
             }
 
-            if (!(s.ruleGroups instanceof Array)) {
+            if (!('ruleGroups' in s) || !(s.ruleGroups instanceof Array)) {
                 s.ruleGroups = [];
             }
 
-            if (typeof s.profile_idx !== 'number') {
+            if (!('profile_idx' in s) || typeof s.profile_idx !== 'number') {
                 s.profile_idx = options.profile_idx;
             }
 
@@ -163,6 +170,8 @@ function loadOptions() {
             options.profiles = s.profiles;
             options.ruleGroups = s.ruleGroups;
             applyOptions(s);
+
+            window.options = options;
         })
 }
 

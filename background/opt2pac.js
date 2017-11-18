@@ -143,7 +143,7 @@ function genPACSysConfig(options) {
   var profiles = options.profiles.map(profile => profile.values.map(v => {
     return [
       v[0] && d1[v[0]] || "",
-      Profile_OptVer2PACver(v[1])
+      opt2pac.toPACResult(v[1])
     ];
   }));
 
@@ -170,3 +170,5 @@ function genPACSysConfig(options) {
 
   return retval;
 }
+
+export default genPACSysConfig;

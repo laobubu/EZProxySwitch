@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EZ Proxy Switch</title>
+    <link rel="stylesheet" href="./options.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="dualcol" id="profiles" v-if="tab==0">
+            <aside>
+                <div class="itemlist">
+                    <div class="item">
+                        <span class="colorbox" style="color: #EEE"></span> Name</div>
+                </div>
+            </aside>
+            <main>
+                <div id="pbaseinfo">
+                    <input type="color" id="pcolor">
+                    <input type="text" id="pname" placeholder="Name">
+                    <input type="text" id="pdescription" placeholder="Optional Description">
+                </div>
+                <div>
+                    <label>Type:
+                        <select id="ptype">
+                            <option value="classic">Classic</option>
+                            <option value="firefox">Advanced</option>
+                        </select>
+                    </label>
+                </div>
+                <div id="pvalue-edit">
+                    <input type="text" id="pvalue">
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="./vue.runtime.min.js"></script>
+    <script src="./options.js"></script>
+</body>
+
+</html>

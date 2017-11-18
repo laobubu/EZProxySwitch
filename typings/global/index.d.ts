@@ -5,7 +5,7 @@ namespace PAC {
 
     type RuleTester = (path: string, host: string) => boolean;
 
-    interface RuleGroup {   // Only used in pac.js
+    interface RuleGroup {   // Tend to use in pac.js, but not. Closure is enough.
         path_regexs_n: RegExp[]
         path_regexs_p: RegExp[]
         host_regexs_n: RegExp[]

@@ -1,5 +1,3 @@
-'use strict'
-
 /**
  * browserAction generator
  */
@@ -37,3 +35,5 @@ class IconGen {
     });
   }
 }
+
+export default IconGen;

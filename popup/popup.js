@@ -2,7 +2,7 @@ var curpid = null;
 
 function highlight_profile(idx) {
     curpid = idx;
-    $$each(".item.active", (el) => { el.className = 'item' })
+    [].forEach.call(document.querySelectorAll(".item.active"), (el) => { el.className = 'item' })
     var ti = document.querySelector('.item[idx="' + idx + '"]');
     if (ti) ti.className = 'active item';
 }
@@ -33,16 +33,14 @@ browser.runtime.sendMessage("popup:list")
             let profile = profiles[i];
             if (profile.hidden) continue;
 
-            let item = $$make('div', {
-                class: 'item',
-                title: profile.description || '',
-                idx: i
-            });
+            let item = document.createElement('div');
+            item.className = 'item';
+            item.title = profile.description || '';
+            item.setAttribute('idx', i);
 
-            let ball = $$make('span', {
-                class: 'ball',
-                style: `color: ${profile.color || '#EEE'}`,
-            });
+            let ball = document.createElement('span');
+            ball.className = 'ball';
+            ball.style.color = profile.color || '#EEE';
 
             item.appendChild(ball);
             item.appendChild(document.createTextNode(profile.name));

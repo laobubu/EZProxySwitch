@@ -9,6 +9,7 @@
     "typeAcquisition": {
         "include": [
             "chrome",
+            "vue",
             "typings/browser",
             "typings/global"
         ]

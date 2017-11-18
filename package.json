@@ -1,0 +1,41 @@
+{
+  "name": "ezproxyswitch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laobubu/EZProxySwitch.git"
+  },
+  "author": "laobubu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/laobubu/EZProxySwitch/issues"
+  },
+  "homepage": "https://github.com/laobubu/EZProxySwitch#readme",
+  "scripts": {
+    "dev": "webpack --watch --hide-modules",
+    "build": "webpack --progress --hide-modules"
+  },
+  "dependencies": {
+    "vue": "^2.4.4"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 10"
+  ],
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.4",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "vue-loader": "^13.0.5",
+    "vue-template-compiler": "^2.4.4",
+    "webpack": "^3.6.0"
+  }
+}

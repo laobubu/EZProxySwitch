@@ -20,7 +20,7 @@ if (typeof NOT_PAC === 'undefined') {
 
     browser.runtime.onMessage.addListener((/** @type {PAC.SysConfig} */ message) => {
         if ('profiles' in message) {
-            profiles = message.profiles.map(p => ([
+            profiles = message.profiles.map(profile => profile.map(p => [
                 (p[0] && new RegExp(p[0]) || null),
                 (p[1])
             ]));
@@ -64,11 +64,14 @@ if (typeof NOT_PAC === 'undefined') {
             else cur_profile = null;
         }
 
+        browser.runtime.sendMessage(JSON.stringify(profiles));
+        browser.runtime.sendMessage(JSON.stringify(ruleGroups));
+        browser.runtime.sendMessage(JSON.stringify(profile_idx));
     });
 
     cur_profile = null;
     profile_idx = 0;
-    browser.runtime.sendMessage("init");
+    browser.runtime.sendMessage("pac:init");
 }
 
 /**
