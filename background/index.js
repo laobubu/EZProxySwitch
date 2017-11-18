@@ -4,6 +4,10 @@ const proxyScriptURL = 'pac.js';
 const optionURL = 'options/options.html';
 const popupURL = 'popup/popup.html';
 
+const iconTitle = 'EZ Proxy Switch: ';
+const iconNormal = 'icons/basic.svg';
+const iconGen = new IconGen('icons/connect.svg', '#F00', 24);
+
 /** @type {GOptions} */
 var options = {
     enabled: false,
@@ -16,8 +20,8 @@ var options = {
 
 /**
  * update the `options` with `newopt`'s data
- * 
- * @param {GOptions} newopt 
+ *
+ * @param {GOptions} newopt
  */
 function applyOptions(newopt) {
     // profile_idx
@@ -25,6 +29,15 @@ function applyOptions(newopt) {
         options.profile_idx = newopt.profile_idx;
         if (options.enabled) {
             browser.runtime.sendMessage({ profile_idx: options.profile_idx }, { toProxyScript: true });
+
+            if (options.profile_idx >= 0) {
+                let profile = options.profiles[options.profile_idx];
+                browser.browserAction.setTitle({ title: iconTitle + profile.name });
+                iconGen.generate(profile.color).then(icon => browser.browserAction.setIcon({ imageData: icon }));
+            } else {
+                browser.browserAction.setTitle({ title: iconTitle + "Automatic" });
+                browser.browserAction.setIcon({ path: iconNormal });
+            }
         }
     }
 
@@ -34,6 +47,7 @@ function applyOptions(newopt) {
             browser.proxy.register(proxyScriptURL);
         } else {
             browser.proxy.unregister();
+            browser.browserAction.setIcon({ path: iconNormal });
         }
     }
 }
@@ -61,8 +75,13 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message.type === 'opt:save') {
             // update options
             let new_options = message.data;
+            options.profiles = new_options.profiles;
+            options.ruleGroups = new_options.ruleGroups;
             applyOptions(new_options);
             updatePACConf();
+        } else if (message === 'opt:pull') {
+            // load options
+            sendResponse(options);
         }
 
         return;
@@ -116,7 +135,7 @@ function loadOptions() {
                         name: "SOCK5 1080",
                         description: "A local proxy",
                         value: "SOCKS 127.0.0.1:1080;DIRECT",
-                        color: "#CCF",
+                        color: "#AAF",
                         hidden: false,
                     },
                 ];
@@ -131,9 +150,9 @@ function loadOptions() {
             }
 
             // Use as current configuration
-            applyOptions(s);
             options.profiles = s.profiles;
             options.ruleGroups = s.ruleGroups;
+            applyOptions(s);
         })
 }
 

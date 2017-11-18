@@ -3,6 +3,8 @@ body, html {
     margin: 0;
     font-size: 15px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+    -moz-user-select: -moz-none;
 }
 
 .item {
@@ -16,7 +18,7 @@ body, html {
 
 .item .ball {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: baseline;
     width: .6em;
     height: .6em;
     background-color: currentColor;

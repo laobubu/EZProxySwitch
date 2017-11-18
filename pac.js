@@ -1,28 +1,27 @@
 /* exported FindProxyForURL */
 'use strict';
 
-/** global switch */
-var enabled = false;
-var profile_idx = -1;
-
 /** @type {PACResult} */
-var cur_profile = null;
+var cur_profile;
+
+/** @type {number} */
+var profile_idx;
 
 /** @type {PACResult[]} */
-var profiles = [];
+var profiles;
 
 /** @type {{tester: AutoProxyTester, value: PACResult}[]} */
-var ruleGroups = [];
+var ruleGroups;
 
 /////////////////////////////////////////////////////////////////////////////////////////
-/// 
+///
 
 /**
  * Escape strings, concate with '|'
- * 
- * @param {string[]} strs pieces of strings. 
+ *
+ * @param {string[]} strs pieces of strings.
  * @param {number} maxlen max length of a regexp
- * 
+ *
  * @returns {string[]}
  */
 function strs2regex(strs, maxlen = 128) {
@@ -102,9 +101,9 @@ class AutoProxyTester {
     }
 
     /**
-     * 
-     * @param {string} path 
-     * @param {string} host 
+     *
+     * @param {string} path
+     * @param {string} host
      * @returns {boolean}
      */
     test(path, host) {
@@ -125,48 +124,54 @@ class AutoProxyTester {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-/// 
+///
 
-browser.runtime.onMessage.addListener((/** @type {PACMessage} */ message) => {
-    if ('profiles' in message) {
-        profiles = message.profiles.map(p => p.value);
-    }
+if (typeof NOT_PAC === 'undefined') {
 
-    if ('ruleGroups' in message) {
-        let r1 = message.ruleGroups;
-        ruleGroups = [];
-        for (let i = 0; i < r1.length; i++) {
-            const rule = r1[i];
-            let tester = null;
-            switch (rule.ruletype) {
-                case 0: //AutoProxy
-                    tester = new AutoProxyTester(rule.rules);
-                    break;
-                default:
-                    throw new Error("Not supported RuleType " + rule.ruletype + ". Found at RuleGroup #" + i);
-            }
-
-            ruleGroups.push({
-                tester,
-                value: profiles[rule.profile],   // TODO: support cascaded RuleGroup
-            });
+    browser.runtime.onMessage.addListener((/** @type {PACMessage} */ message) => {
+        if ('profiles' in message) {
+            profiles = message.profiles.map(p => p.value);
         }
-    }
 
-    if ('profile_idx' in message) {
-        profile_idx = message.profile_idx;
-        if (profile_idx >= 0) cur_profile = profiles[profile_idx];
-        else cur_profile = null;
-    }
+        if ('ruleGroups' in message) {
+            let r1 = message.ruleGroups;
+            ruleGroups = [];
+            for (let i = 0; i < r1.length; i++) {
+                const rule = r1[i];
+                let tester = null;
+                switch (rule.ruletype) {
+                    case 0: //AutoProxy
+                        tester = new AutoProxyTester(rule.rules);
+                        break;
+                    default:
+                        throw new Error("Not supported RuleType " + rule.ruletype + ". Found at RuleGroup #" + i);
+                }
 
-});
-browser.runtime.sendMessage("init");
+                ruleGroups.push({
+                    tester,
+                    value: profiles[rule.profile],   // TODO: support cascaded RuleGroup
+                });
+            }
+        }
+
+        if ('profile_idx' in message) {
+            profile_idx = message.profile_idx;
+            if (profile_idx >= 0) cur_profile = profiles[profile_idx];
+            else cur_profile = null;
+        }
+
+    });
+
+    cur_profile = null;
+    profile_idx = 0;
+    browser.runtime.sendMessage("init");
+}
 
 /**
  * PAC Handler
- * 
+ *
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_%28PAC%29_file#Return_value_format
- * 
+ *
  * @param {string} path  See the URL above, something like "https://laobubu.net" by default.
  * @param {string} host  Hostname without scheme and port number.
  */

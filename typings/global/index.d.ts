@@ -27,7 +27,7 @@ interface GOptions {
 
     /**
      * Current using profile index.
-     * 
+     *
      * >=0      Using a profile
      * -1       Using rules
      */

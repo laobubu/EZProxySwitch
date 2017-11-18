@@ -1,0 +1,53 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  font-size: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 120%;
+}
+
+/* Dual Column */
+
+.dualcol {
+  display: flex;
+  align-items: stretch;
+}
+
+.dualcol > aside {
+  width: 300px;
+}
+
+.dualcol > main {
+  flex-grow: 1;
+  background-color: #EEf;
+}
+
+/* List */
+
+.itemlist .item {
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 2px;
+  border-bottom: 1px solid #CCC;
+  color: #666;
+  background-color: #FFF;
+}
+
+.itemlist .item .colorbox {
+  display: inline-block;
+  width: 1em;
+  margin-right: .25em;
+  vertical-align: bottom;
+  height: 1em;
+  background-color: currentColor;
+  border: 1px solid rgba(0,0,0,0.3);
+}
+
+.itemlist .item:hover {
+  background-color: #EFF;
+}
+
+.itemlist .item.active {
+  color: #000;
+  background-color: #CEF;
+}
