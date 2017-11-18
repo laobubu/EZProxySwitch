@@ -13,12 +13,31 @@
     <div class="dualcol" id="profiles">
         <aside>
             <div class="itemlist">
-                <div class="item"><span class="colorbox" style="color: {{ color }}"></span> {{ name }}</div>
+                <div class="item">
+                    <span class="colorbox" style="color: #EEE"></span> Name</div>
             </div>
         </aside>
-        <main>lorem</main>
+        <main>
+            <div id="pbaseinfo">
+                <input type="color" id="pcolor">
+                <input type="text" id="pname" placeholder="Name">
+                <input type="text" id="pdescription" placeholder="Optional Description">
+            </div>
+            <div>
+                <label>Type:
+                    <select id="ptype">
+                        <option value="classic">Classic</option>
+                        <option value="firefox">Advanced</option>
+                    </select>
+                </label>
+            </div>
+            <div id="pvalue-edit">
+                <input type="text" id="pvalue">
+            </div>
+        </main>
     </div>
 
+    <script src="../htmlutil.js"></script>
     <script src="./options.js"></script>
 </body>
 

@@ -56,11 +56,7 @@ function applyOptions(newopt) {
  * Tell PAC script current configuration via sendMessage
  */
 function updatePACConf() {
-    browser.runtime.sendMessage({
-        profiles: options.profiles,
-        ruleGroups: options.ruleGroups,
-        profile_idx: options.profile_idx,
-    }, { toProxyScript: true });
+    browser.runtime.sendMessage(genPACSysConfig(options), { toProxyScript: true });
 }
 
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -118,24 +114,38 @@ function loadOptions() {
                     {
                         name: "System",
                         description: "Let system detect the proxy",
-                        value: null,
-                        color: "#EEE",
+                        values: [
+                            ["", []],
+                        ],
+                        type: "classic",
+                        color: "#C0C0C0",
                         hidden: false,
                     },
 
                     {
                         name: "Direct",
                         description: "Direct access without proxy",
-                        value: "DIRECT",
-                        color: "#EEE",
+                        values: [
+                            ["", [
+                                { type: 'direct' },
+                            ]],
+                        ],
+                        type: "classic",
+                        color: "#C0C0C0",
                         hidden: false,
                     },
 
                     {
                         name: "SOCK5 1080",
                         description: "A local proxy",
-                        value: "SOCKS 127.0.0.1:1080;DIRECT",
-                        color: "#AAF",
+                        values: [
+                            ["", [
+                                { type: 'socks', host: '127.0.0.1', port: '1080' },
+                                { type: 'direct' },
+                            ]],
+                        ],
+                        type: "classic",
+                        color: "#408080",
                         hidden: false,
                     },
                 ];

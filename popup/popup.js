@@ -33,14 +33,16 @@ browser.runtime.sendMessage("popup:list")
             let profile = profiles[i];
             if (profile.hidden) continue;
 
-            let item = document.createElement('div');
-            item.className = 'item';
-            item.setAttribute('title', profile.description || '');
-            item.setAttribute('idx', i);
+            let item = $$make('div', {
+                class: 'item',
+                title: profile.description || '',
+                idx: i
+            });
 
-            let ball = document.createElement('span');
-            ball.className = 'ball';
-            ball.setAttribute('style', 'color:' + (profile.color || '#EEE'));
+            let ball = $$make('span', {
+                class: 'ball',
+                style: `color: ${profile.color || '#EEE'}`,
+            });
 
             item.appendChild(ball);
             item.appendChild(document.createTextNode(profile.name));

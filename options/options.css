@@ -6,6 +6,10 @@ html, body {
   line-height: 120%;
 }
 
+input {
+  box-sizing: border-box;
+}
+
 /* Dual Column */
 
 .dualcol {
@@ -19,15 +23,18 @@ html, body {
 
 .dualcol > main {
   flex-grow: 1;
-  background-color: #EEf;
 }
 
 /* List */
 
+.itemlist {
+  border: 1px solid #CCC;
+  border-bottom: 0;
+}
+
 .itemlist .item {
   cursor: pointer;
   padding: 5px;
-  border-radius: 2px;
   border-bottom: 1px solid #CCC;
   color: #666;
   background-color: #FFF;
@@ -50,4 +57,31 @@ html, body {
 .itemlist .item.active {
   color: #000;
   background-color: #CEF;
+}
+
+/* Profile */
+
+#pbaseinfo {
+  position: relative;
+  padding-left: 60px;
+}
+
+#pcolor {
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  width: 48px;
+  height: 48px;
+  margin-top: -24px;
+}
+
+#pname {
+  font-size: 1.5em;
+  display: block;
+  width: 100%;
+}
+
+#pdescription {
+  display: block;
+  width: 100%;
 }
