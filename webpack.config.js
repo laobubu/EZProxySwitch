@@ -1,6 +1,8 @@
 var path = require('path')
 var webpack = require('webpack')
 
+var IS_PACKING = process.env.PACKING === 'true';
+
 module.exports = {
   entry: {
     options: './options/src/main.js',
@@ -90,13 +92,14 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"'
+        NODE_ENV: '"production"',
+        PACKING: IS_PACKING,
       }
     }),
   ]
 }
 
-if (process.env.PACKING === 'true') {
+if (IS_PACKING) {
   module.exports.plugins = module.exports.plugins.concat([
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,

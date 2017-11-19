@@ -13,6 +13,9 @@ var profiles;
 /** @type {{test: PAC.RuleTester, profile: PAC.Profile}[]} */
 var ruleGroups;
 
+/** Send message to background.js */
+var debugging = false;
+
 /////////////////////////////////////////////////////////////////////////////////////////
 ///
 
@@ -64,9 +67,15 @@ if (typeof NOT_PAC === 'undefined') {
             else cur_profile = null;
         }
 
-        browser.runtime.sendMessage(JSON.stringify(profiles));
-        browser.runtime.sendMessage(JSON.stringify(ruleGroups));
-        browser.runtime.sendMessage(JSON.stringify(profile_idx));
+        if ('debugging' in message) {
+            debugging = !!message.debugging;
+        }
+
+        if (debugging) {
+            browser.runtime.sendMessage(JSON.stringify(profiles));
+            browser.runtime.sendMessage(JSON.stringify(ruleGroups));
+            browser.runtime.sendMessage(JSON.stringify(profile_idx));
+        }
     });
 
     cur_profile = null;
@@ -83,7 +92,9 @@ if (typeof NOT_PAC === 'undefined') {
  * @param {string} host  Hostname without scheme and port number.
  */
 function FindProxyForURL(path, host) {
-    browser.runtime.sendMessage(`Checking ${path}, host ${host}, pfidx = ${profile_idx}, curval = ${JSON.stringify(cur_profile)}`)
+    if (debugging) {
+        browser.runtime.sendMessage(`Checking ${path}, host ${host}, pfidx = ${profile_idx}, curval = ${JSON.stringify(cur_profile)}`)
+    }
 
     /** @type {PAC.Profile} */
     var retval = null;
