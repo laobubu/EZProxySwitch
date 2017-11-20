@@ -13,7 +13,6 @@
           <span class="name" v-text="profile.name"></span>
         </div>
         <div class="item" @click="addProfile()">
-          <div class="color"></div>
           New...
         </div>
       </div>
@@ -26,7 +25,6 @@
           <span class="name" v-text="rg.name"></span>
         </div>
         <div class="item" @click="addRG()">
-          <div class="color"></div>
           New...
         </div>
       </div>
@@ -273,6 +271,7 @@ $aside-width: 250px;
 
   .item {
     padding: 5px;
+    padding-left: calc(5px + 1em);
     border-bottom: 1px solid #eee;
     color: #666;
     cursor: pointer;
@@ -301,6 +300,7 @@ $aside-width: 250px;
 
     .color {
       display: inline-block;
+      margin-left: -0.7em;
       width: 0.7em;
       height: 0.7em;
       vertical-align: baseline;
